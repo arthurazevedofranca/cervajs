@@ -1,0 +1,284 @@
+<!doctype html>
+<html ng-app="italianosdev">
+	<head>
+		<title>Italianos Dev</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular.min.js"></script>
+		<script 
+			src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.min.js"></script>
+		<script 
+			src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+			<script 
+			src="http://cdnjs.cloudflare.com/ajax/libs/underscore.string/2.3.3/underscore.string.min.js"></script>
+			
+	</head>
+	<body>
+		<div ui-view></div>
+
+		<script>
+			angular.module('italianosdevutils', []);
+			angular.module('italianosdev', ['italianosdevutils', 'ui.router']);
+
+			angular.module('italianosdev').config(function ($stateProvider) {
+				$stateProvider.state('cervas', {
+					abstract: true,
+					url: '/cervas',
+					template: '<div ui-view></div>',
+				});
+
+				$stateProvider.state('cervas.list', {
+					url: '/list',
+					templateUrl: '/cervas/list.html',
+					controller: 'cervasCtrl'
+				});
+				$stateProvider.state('cervas.add', {
+					url: '/add',
+					templateUrl: '/cervas/edit.html',
+					controller: 'cervasAddCtrl'
+				});
+				$stateProvider.state('cervas.view', {
+					url: '/:cervaName',
+					templateUrl: '/cervas/view.html',
+					controller: 'cervasViewCtrl'
+				});
+				$stateProvider.state('cervas.edit', {
+					url: '/edit/:cervaName',
+					templateUrl: '/cervas/edit.html',
+					controller: 'cervasEditCtrl'
+				});
+				$stateProvider.state('cervas.remove', {
+					url: '/remove/:cervaName',
+					controller: 'cervasRemoveCtrl'
+				});
+			});
+
+			angular.module('italianosdev').service('$cervas', function ($q, $timeout) {
+
+				var cervas = [];
+
+				this.add = function (cerva) {
+					var defer =$q.defer();
+
+					if(_(cervas).findWhere({name:cerva.name}))
+					{
+						defer.reject(new Error("Cerva já cadastrada"));
+						
+					}
+					else
+					{					
+						cervas.push(cerva);
+						defer.resolve();
+					}
+
+					return defer.promise;
+
+				};
+
+				this.edit = function (cerva) {
+					var defer =$q.defer();
+
+					var indice = _(cervas).indexOf(cerva);
+
+					cervas.splice(indice,1, cerva);
+					defer.resolve();
+					
+					return defer.promise;
+
+				};
+
+				this.list = function () {
+					var defer = $q.defer();
+
+					$timeout(function () {
+						defer.resolve(_(cervas).clone());
+					}, 2000);
+
+					return defer.promise;
+				};
+
+				this.get = function (name) {
+					return $q.when(_(cervas).findWhere({name: name}));
+				};
+
+				this.remove = function (cerva) {
+					var defer = $q.defer();
+
+					var indice = _(cervas).indexOf(cerva);
+
+					if (indice < 0) {
+						defer.reject(new Error("Não foi possível encontrar a cerveja"));
+					} else if (cervas[indice].cornPercent < 30) {
+						defer.reject(new Error("Não é possivel uma cerveja boa"));
+					} else {
+						cervas.splice(indice,1);
+						defer.resolve();
+					}
+
+					return defer.promise;
+				};
+
+				this.atualizarCerva = function(cerva) {
+					var defer = $q.defer();
+
+					if(cerva.newCornPercent == "" || cerva.newCornPercent == null || cerva.newCornPercent == undefined ){
+						defer.reject(new Error("Percentual zerado"));
+					} else {
+						var indice = _(cervas).indexOf(cerva);
+
+						cervas[indice].cornPercent = cerva.newCornPercent;
+						defer.resolve();
+
+					}
+					return defer.promise;
+				};
+
+
+			});
+			
+			angular.module('italianosdev')
+			.factory('logErro', function () {
+				return function (error) {
+					console.log('error', error);
+					alert(error.message);
+				};
+			})
+			.controller('cervasCtrl', function ($scope, $cervas, logErro){
+				$cervas.list().then(function success(cervas) {
+					$scope.cervas = cervas;
+				})
+				.catch(logErro);
+
+				$scope.isvalidCerva = function (cerva) {
+					if(cerva.cornPercent < 30 ){return true;}
+				};
+			})
+			.controller('cervasAddCtrl', function ($scope, $state, $cervas, logErro) {
+				$scope.cerva={};
+				$scope.save = function () {
+					
+					$cervas.add($scope.cerva)
+					.then(function success(){
+						$state.go('^.list');
+					})
+					.catch(logErro);
+				};
+			})
+			.controller('cervasEditCtrl', function ($scope, $cervas, $stateParams, $state, logErro) {
+				$cervas.get($stateParams.cervaName).then(function (cerva) {
+					$scope.cerva = cerva;
+				});
+				$scope.save = function () {
+					
+					$cervas.edit($scope.cerva)
+					.then(function success(){
+						$state.go('^.list');
+					})
+					.catch(logErro);
+				};
+			})
+			.controller('cervasViewCtrl', function ($scope, $cervas, $stateParams) {
+				$cervas.get($stateParams.cervaName).then(function (cerva) {
+					$scope.cerva = cerva;
+				});
+			})
+			.controller('cervasRemoveCtrl', function ($scope, $cervas, $stateParams, $state, logErro) {
+				$cervas.get($stateParams.cervaName)
+				.then(function (cerva) {
+					$scope.cerva = cerva;
+
+					$cervas.remove(cerva)
+					.catch(logErro)
+					.finally(function() {
+						$state.go('^.list');
+					});
+				})
+				.catch(logErro)
+				.finally(function() {
+						$state.go('^.list');
+				});
+			});
+
+			angular.module('italianosdev').controller('todohomeCtrl', function ($scope, $rootScope) {
+
+				$scope.removerCerva = function(cerva){
+					todohomeSvc.removeCerva(cerva)
+					.then(list)
+					.catch(logErro);
+
+
+				};
+
+				$scope.toggleCerva = function(cerva) {
+					cerva.editMode = !cerva.editMode;
+				};
+
+				$scope.initEditar = function(cerva) {
+					cerva.newCornPercent = cerva.cornPercent;
+					$scope.toggleCerva(cerva);
+				};
+
+				$scope.atualizarCerva = function(cerva) {
+					todohomeSvc.atualizarCerva(cerva)
+					.then(function success(){
+						//$scope.toggleCerva(cerva);
+						list();
+					})
+					.catch(logErro);
+					
+				};
+
+				$scope.cancelarAtualizacao = function(cerva) {
+					cerva.newCornPercent = cerva.cornPercent;
+					$scope.toggleCerva(cerva);
+				};
+			});
+		</script>
+
+		<script type="text/ng-template" id="/cervas/view.html">
+			<div>
+				<p>Visualizar cerva</p> 
+
+				<p>Nome: {{ cerva.name }} </p>
+				<p>Percentual de milho: {{ cerva.cornPercent }} </p>
+				<p>Percentual de arroz: {{ cerva.ricePercent }} </p>
+				<p>Pais de origem: {{ cerva.originCounty }} </p>
+				<p><a ui-sref="^.list">listar</a><p>
+
+			</div>
+		</script>
+
+		<script type="text/ng-template" id="/cervas/edit.html">
+			<div>
+				<p>Salvar cerva</p> 
+
+				<p>Nome: <input ng-model="cerva.name" /></p>
+				<p>Percentual de milho: <input ng-model="cerva.cornPercent" /></p>
+				<p>Percentual de arroz: <input ng-model="cerva.ricePercent" /></p>
+				<p>Pais de origem: <input ng-model="cerva.originCounty" /></p>
+
+				<p><button ng-click="save()">Salvar</button><p>
+			</div>
+		</script>
+
+		<script type="text/ng-template" id="/cervas/list.html">
+			<div>
+				<p><a ui-sref="^.add">Adicionar</a><p>
+			</div>
+			<div>
+				<p ng-repeat="cerva in cervas">
+					{{cerva.name}} - 
+					<span ng-if="!cerva.editMode">{{cerva.cornPercent}}</span>
+					<span ng-if="cerva.editMode">
+						<input type="text" ng-model="cerva.newCornPercent" />
+					</span>-
+					<span ng-if="isvalidCerva(cerva)">Boa</span>
+					<span ng-if="!isvalidCerva(cerva)">Nãããããão</span>
+
+					<a ui-sref="^.edit({cervaName: cerva.name})">Editar</a>
+					<a ui-sref="^.remove({cervaName: cerva.name})">Remover</a>
+					<a ui-sref="^.view({cervaName: cerva.name})">visualizar</a>
+				</p>
+
+			</div>
+		</script>
+	</body>
+</html>
