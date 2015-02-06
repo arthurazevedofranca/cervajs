@@ -2,5 +2,5 @@
 var mongoose = require('mongoose');
 
 module.exports = function () {
-	mongoose.connect('mongodb://localhost/italianosdev');
+	mongoose.connect('mongodb://localhost/cervajs');
 }
