@@ -1,13 +1,15 @@
+'use strict';
 
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser')
+let express = require('express');
+let app = express();
+
+let bodyParser = require('body-parser')
 
 app.use(express.static(__dirname + '/../web'))
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(bodyParser.json());
 
-require('./db.js')();
-require('./routes.js')(app);
+require('./connection')();
+require('./routes')(app);
 
 app.listen(3000);
