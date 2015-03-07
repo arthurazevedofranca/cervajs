@@ -1,0 +1,19 @@
+<div>
+	<p><a ui-sref="^.add">Adicionar</a><p>
+</div>
+<div>
+	<p ng-repeat="cerva in cervas">
+		{{cerva.name}} - 
+		<span ng-if="!cerva.editMode">{{cerva.cornPercent}}</span>
+		<span ng-if="cerva.editMode">
+			<input type="text" ng-model="cerva.newCornPercent" />
+		</span>-
+
+		<itd-beer-check cerva="cerva" ng-if="cerva" color-error="red"></itd-beer-check>
+
+		<a ui-sref="^.edit({cervaName: cerva.name})">Editar</a>
+		<a ui-sref="^.remove({cervaName: cerva.name})">Remover</a>
+		<a ui-sref="^.view({cervaName: cerva.name})">visualizar</a>
+	</p>
+
+</div>
