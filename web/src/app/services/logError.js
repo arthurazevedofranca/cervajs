@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cervasjs')
-.factory('logError', function () {
+.factory('logError', function ($log) {
 	return function (error) {
-		console.log('error', error);
+		$log.error('error', error);
 		alert(error.message);
 	};
 });

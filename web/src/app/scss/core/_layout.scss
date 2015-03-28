@@ -1,0 +1,68 @@
+.h100 {
+	height: 100vh;
+	max-height: 100vh;
+}
+
+html, body {
+	font-family: Roboto;
+}
+
+h1 { }
+h2 { }
+
+h1, h2, h3, h4, h5 {
+}
+
+h1 {
+}
+
+.row {
+}
+
+.iz-relative {
+	position: relative;
+}
+
+.iz-absolute {
+	position: absolute;
+}
+
+.full-width input {
+	width: 100%
+}
+
+.hide {
+	display: none;
+}
+
+.mute {
+}
+
+.row {
+}
+
+[ng-click] {
+	cursor: pointer;
+}
+
+
+.btn-primary {
+}
+
+a {
+	text-decoration: none;
+}
+
+.radial-shadow {
+
+	margin: 40px 0 50px;
+
+	&:before {
+		content: '.';
+		display: flex;
+		height:2px;
+		position: relative;
+		top: 14px;
+		background: radial-gradient(circle, rgba(255, 255, 255, 0.0) 5%, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0) 80%);
+	}
+}

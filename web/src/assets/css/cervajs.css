@@ -1,0 +1,38 @@
+.h100 {
+  height: 100vh;
+  max-height: 100vh; }
+
+html, body {
+  font-family: Roboto; }
+
+.iz-relative {
+  position: relative; }
+
+.iz-absolute {
+  position: absolute; }
+
+.full-width input {
+  width: 100%; }
+
+.hide {
+  display: none; }
+
+[ng-click] {
+  cursor: pointer; }
+
+a {
+  text-decoration: none; }
+
+.radial-shadow {
+  margin: 40px 0 50px; }
+  .radial-shadow:before {
+    content: '.';
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    height: 2px;
+    position: relative;
+    top: 14px;
+    background: -webkit-radial-gradient(circle, rgba(255, 255, 255, 0) 5%, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0) 80%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0) 5%, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0) 80%); }
