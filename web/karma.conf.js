@@ -20,12 +20,12 @@ module.exports = function (config) {
 			// (these files will be instrumented by Istanbul)
 			'./src/app/**/*.js': ['coverage']
 		},
-
-		// optionally, configure the reporter
-		coverageReporter: {
-			type: 'html',
-			dir: 'coverage/'
-		},
+		//
+		// // optionally, configure the reporter
+		// coverageReporter: {
+		// 	type: 'html',
+		// 	dir: 'coverage/'
+		// },
 
 		// web server port
 		port: 9875,

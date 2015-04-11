@@ -1,14 +1,22 @@
 <?xml version="1.0"?>
 <testsuites>
-  <testsuite name="PhantomJS 1.9.8 (Linux)" package="" timestamp="2015-03-28T02:33:48" id="0" hostname="arthur-HP-EliteBook-2540p" tests="5" errors="0" failures="0" time="0.034">
+  <testsuite name="PhantomJS 1.9.8 (Linux)" package="" timestamp="2015-04-11T17:44:45" id="0" hostname="arthur" tests="13" errors="0" failures="0" time="0.061">
     <properties>
       <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34"/>
     </properties>
-    <testcase name="list-parametros" time="0.022" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="list-parametros" time="0.021" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
     <testcase name="list-retorno" time="0.005" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
-    <testcase name="should is valid" time="0.003" classname="PhantomJS 1.9.8 (Linux).cervaHelper isValid"/>
-    <testcase name="not should is valid" time="0.002" classname="PhantomJS 1.9.8 (Linux).cervaHelper isValid"/>
-    <testcase name="itaipava?" time="0.002" classname="PhantomJS 1.9.8 (Linux).cervaHelper isValid"/>
+    <testcase name="create-parametro" time="0.003" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="create-return" time="0.002" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="delete-param" time="0.008" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="delete-success" time="0.004" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="delete-fail" time="0.003" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="update-param" time="0.002" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="update-success" time="0.003" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="update-fail" time="0.002" classname="PhantomJS 1.9.8 (Linux).Cerva"/>
+    <testcase name="should is valid" time="0.002" classname="PhantomJS 1.9.8 (Linux).cervaHelper isValid"/>
+    <testcase name="not should is valid" time="0.003" classname="PhantomJS 1.9.8 (Linux).cervaHelper isValid"/>
+    <testcase name="itaipava?" time="0.003" classname="PhantomJS 1.9.8 (Linux).cervaHelper isValid"/>
     <system-out><![CDATA[
 ]]></system-out>
     <system-err/>

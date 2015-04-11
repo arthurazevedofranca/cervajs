@@ -1,1 +1,3 @@
 node_modules
+web/npm-debug.log
+web/test-results.xml

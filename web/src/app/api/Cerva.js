@@ -18,4 +18,10 @@ angular.module('cervasjs')
 			return response.data;
 		});
 	};
+
+	this.delete = function(id){
+		return $http.delete(configs.basePath +'/cervas/'+id).then(function(response){
+			return response.data;
+		});
+	};
 });
