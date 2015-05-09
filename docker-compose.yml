@@ -1,0 +1,28 @@
+app:
+    build: ./app/docker
+    links:
+        - db
+    environment:
+        MongoDBBaseUrl: mongodb://db
+    ports:
+        - "8082:8082"
+    volumes:
+        - ./app:/cervajs
+    restart: always
+
+web:
+    build: ./web/docker
+    links:
+        - app
+    ports:
+        - "3000:3000"
+    volumes:
+        - ./web:/cervajs
+
+db:
+    image: mongo
+    command: --smallfiles --nojournal
+    ports:
+        - "27017:27017"
+    volumes:
+        - ./data/db:/data/db

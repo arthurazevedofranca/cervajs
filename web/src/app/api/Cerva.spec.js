@@ -29,11 +29,14 @@ describe('Cerva', function () {
 
 	it('list-retorno', function (done) {
 
-		var response = { data: {} };
+		var obj =[{_id:'1'},{_id:'2'}];
+		var response = { data:obj};
+
 		spyOn($http, 'get').and.returnValue($q.when(response));
 
 		Cerva.list('').then(function(data) {
-			expect(data).toEqual(response.data);
+
+			expect(data).toEqual([{id:'1'},{id:'2'}]);
 			done();
 		});
 
@@ -122,6 +125,39 @@ describe('Cerva', function () {
 		spyOn($http, 'put').and.returnValue($q.reject());
 
 		Cerva.update(cerva).catch(function () {
+			done();
+		});
+
+		$rootScope.$apply();
+	});
+
+	it('get-param', function () {
+		var cervaId = 1;
+		spyOn($http,'get').and.returnValue($q.when());
+
+		Cerva.get(cervaId);
+
+		expect($http.get).toHaveBeenCalledWith(configs.basePath +'/cervas/' + cervaId);
+	});
+
+	it('get-success', function(done) {
+		var cerva = {_id: 1, nome: 'germanica'};
+		var response = {data: angular.copy(cerva)};
+		spyOn($http,'get').and.returnValue($q.when(response));
+
+		Cerva.get(cerva._id).then(function(data) {
+			expect(data).toEqual({id: cerva._id, nome: cerva.nome});
+			done();
+		});
+
+		$rootScope.$apply();
+	});
+
+	it('get-fail',function(done){
+		var cervaId = 1;
+		spyOn($http, 'get').and.returnValue($q.reject());
+
+		Cerva.get(cervaId).catch(function () {
 			done();
 		});
 

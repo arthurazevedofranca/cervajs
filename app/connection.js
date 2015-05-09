@@ -3,7 +3,7 @@
 class Connection {
 	constructor () {
 		let Mongorito = require('mongorito');
-		Mongorito.connect('localhost/cervajs');
+		Mongorito.connect('mongodb://localhost/cervajs');
 	}
 }
 

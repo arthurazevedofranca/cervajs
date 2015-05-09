@@ -2,5 +2,5 @@
 
 angular.module('cervasjs')
 .constant('configs', {
-	basePath: 'http://localhost:3000/app'
+	basePath: 'http://localhost:8082/app'
 });

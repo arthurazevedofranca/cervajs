@@ -4,7 +4,7 @@
 </div>
 <div>
 	<p ng-repeat="cerva in cervas">
-		{{cerva.name}} - 
+		{{cerva.name}} -
 		<span ng-if="!cerva.editMode">{{cerva.cornPercent}}</span>
 		<span ng-if="cerva.editMode">
 			<input type="text" ng-model="cerva.newCornPercent" />
@@ -12,8 +12,8 @@
 
 		<itd-beer-check cerva="cerva" ng-if="cerva" color-error="red"></itd-beer-check>
 
-		<a ui-sref="^.edit({cervaName: cerva.name})">Editar</a>
-		<a ui-sref="^.remove({cervaName: cerva.name})">Remover</a>
+		<a ui-sref="^.edit({id: cerva.id})">Editar</a>
+		<a ng-click="remove(cerva.id)">Remover</a>
 		<a ui-sref="^.view({cervaName: cerva.name})">visualizar</a>
 	</p>
 

@@ -16,4 +16,9 @@ angular.module('cervasjs').config(function ($stateProvider) {
 		templateUrl: 'app/states/cervas/edit.html',
 		controller: 'cervasAddCtrl'
 	});
+	$stateProvider.state('cervas.edit', {
+		url: '/edit/:id',
+		templateUrl: 'app/states/cervas/edit.html',
+		controller: 'cervasEditCtrl'
+	});
 });
